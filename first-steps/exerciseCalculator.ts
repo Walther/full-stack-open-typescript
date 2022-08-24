@@ -29,7 +29,7 @@ export const calculateExercises = (
   } else if (percentage < 100.0) {
     rating = 2;
     ratingDescription = "good job! keep up the work";
-  } else if (percentage >= 100.0) {
+  } else {
     rating = 3;
     ratingDescription =
       "excellent work! you may consider increasing your target";

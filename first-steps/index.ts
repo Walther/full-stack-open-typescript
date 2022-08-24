@@ -8,12 +8,12 @@ app.get("/ping", (_req, res) => {
 
 app.get("/bmi", (req, res) => {
   const params = req.query;
-  const weight: number = Number(params.weight);
+  const weight = Number(params.weight);
   if (isNaN(weight)) {
     res.status(400).send({ error: "malformatted parameters" });
     return;
   }
-  const height: number = Number(params.height);
+  const height = Number(params.height);
   if (isNaN(height)) {
     res.status(400).send({ error: "malformatted parameters" });
     return;

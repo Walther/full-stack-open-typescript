@@ -56,9 +56,9 @@ const parseArguments = (
     throw new Error("Provided values were not numbers!");
   }
 
-  let exerciseHours: number[] = [];
+  const exerciseHours: number[] = [];
   for (const arg of args.slice(3)) {
-    let hours = Number(arg);
+    const hours = Number(arg);
     if (isNaN(target)) {
       break;
     }

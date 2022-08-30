@@ -32,6 +32,7 @@ const PatientPage = () => {
   if (!patient) {
     return <p>could not fetch patient</p>;
   }
+  const entries = patient.entries;
 
   return (
     <div className="App">
@@ -48,6 +49,21 @@ const PatientPage = () => {
         <ListItemText primary={patient.dateOfBirth} />
         <ListItemText primary={patient.ssn} />
       </List>
+      <h2>entries</h2>
+      {entries.map((entry) => (
+        <div key={entry.id}>
+          <h3>
+            {entry.date} {entry.description}
+          </h3>
+          {entry.diagnosisCodes && (
+            <List>
+              {entry.diagnosisCodes?.map((code) => (
+                <ListItemText key={code} primary={code} />
+              ))}
+            </List>
+          )}
+        </div>
+      ))}
     </div>
   );
 };

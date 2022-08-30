@@ -16,7 +16,7 @@ export const calculateExercises = (
   exerciseHours: number[]
 ): exerciseAnalysis => {
   const periodLength = exerciseHours.length;
-  const trainingDays = exerciseHours.filter((hours) => hours >= 0).length;
+  const trainingDays = exerciseHours.filter((hours) => hours > 0).length;
   const average = sum(exerciseHours) / periodLength;
   const success = average > target;
   const percentage = (average / target) * 100.0;

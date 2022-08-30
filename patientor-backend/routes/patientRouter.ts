@@ -1,5 +1,9 @@
 import express from "express";
-import { getPatients, newPatient } from "../services/patientService";
+import {
+  getPatient,
+  getPatients,
+  newPatient,
+} from "../services/patientService";
 import { PatientPublicInfo } from "../types";
 import { parseString, toNewPatient } from "../utils";
 
@@ -26,8 +30,7 @@ patientRouter.post("/", (req, res) => {
 
 patientRouter.get("/:id", (req, res) => {
   const id = parseString(req.params.id, "id");
-  const patients: PatientPublicInfo[] = getPatients();
-  const patient = patients.find((p: PatientPublicInfo) => p.id === id);
+  const patient = getPatient(id);
   if (patient) {
     res.send(patient);
   } else {

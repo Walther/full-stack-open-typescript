@@ -46,6 +46,7 @@ const PatientPage = () => {
         <ListItemText primary={patient.gender} />
         <ListItemText primary={patient.occupation} />
         <ListItemText primary={patient.dateOfBirth} />
+        <ListItemText primary={patient.ssn} />
       </List>
     </div>
   );

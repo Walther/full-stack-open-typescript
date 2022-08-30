@@ -8,6 +8,7 @@ export const toNewPatient = (object: any): NewPatient => {
     name: parseString(object.name, "name"),
     occupation: parseString(object.occupation, "occupation"),
     dateOfBirth: parseString(object.dateOfBirth, "dateOfBirth"),
+    entries: [],
   };
 
   return newPatient;

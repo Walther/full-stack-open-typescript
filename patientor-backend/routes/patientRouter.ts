@@ -1,7 +1,7 @@
 import express from "express";
 import { getPatients, newPatient } from "../services/patientService";
 import { PatientPublicInfo } from "../types";
-import { toNewPatient } from "../utils";
+import { parseString, toNewPatient } from "../utils";
 
 const patientRouter = express.Router();
 
@@ -21,6 +21,17 @@ patientRouter.post("/", (req, res) => {
       errorMessage += " Error: " + error.message;
     }
     res.status(400).send(errorMessage);
+  }
+});
+
+patientRouter.get("/:id", (req, res) => {
+  const id = parseString(req.params.id, "id");
+  const patients: PatientPublicInfo[] = getPatients();
+  const patient = patients.find((p: PatientPublicInfo) => p.id === id);
+  if (patient) {
+    res.send(patient);
+  } else {
+    res.status(404).send();
   }
 });
 

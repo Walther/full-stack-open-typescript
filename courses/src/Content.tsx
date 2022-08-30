@@ -1,13 +1,12 @@
 import { ReactElement } from "react";
+import Part from "./Part";
 import { CoursePart } from "./types";
 
 const Content = ({ parts }: { parts: CoursePart[] }): ReactElement => {
   return (
     <>
       {parts.map((part) => (
-        <p key={part.name}>
-          {part.name} {part.exerciseCount}
-        </p>
+        <Part key={part.name} part={part} />
       ))}
     </>
   );

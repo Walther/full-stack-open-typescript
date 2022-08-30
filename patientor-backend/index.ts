@@ -6,6 +6,9 @@ app.use(express.json());
 
 const PORT = 3001;
 
+import diagnosisRouter from "./routes/diagnosisRouter";
+app.use("/api/diagnoses", diagnosisRouter);
+
 app.get("/api/ping", (_req, res) => {
   console.log("someone pinged here");
   res.send("pong");

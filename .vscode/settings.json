@@ -1,1 +1,1 @@
-{ "eslint.workingDirectories": ["first-steps", "patientor-backend"] }
+{ "eslint.workingDirectories": ["first-steps", "patientor-backend", "courses"] }

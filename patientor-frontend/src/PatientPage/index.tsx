@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import { setDiagnosesList, setPatient, useStateValue } from "../state";
 import { apiBaseUrl } from "../constants";
 import { Diagnosis, Patient } from "../types";
+import EntryElement from "../EntryElement";
 
 const PatientPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -70,21 +71,7 @@ const PatientPage = () => {
       </List>
       <h2>entries</h2>
       {entries.map((entry) => (
-        <div key={entry.id}>
-          <h3>
-            {entry.date} {entry.description}
-          </h3>
-          {entry.diagnosisCodes && (
-            <List>
-              {entry.diagnosisCodes?.map((code: string) => {
-                const description: string = diagnoses[code]?.name;
-                return (
-                  <ListItemText key={code} primary={`${code} ${description}`} />
-                );
-              })}
-            </List>
-          )}
-        </div>
+        <EntryElement key={entry.id} entry={entry} diagnoses={diagnoses} />
       ))}
     </div>
   );

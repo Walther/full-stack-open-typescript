@@ -2,51 +2,43 @@ import React from "react";
 import { Grid, Button } from "@material-ui/core";
 import { Field, Formik, Form } from "formik";
 
-import { TextField, SelectField, GenderOption } from "../FormField";
-import { Gender, Patient } from "../types";
+import { TextField } from "../FormField";
+import { OccupationalHealthcareEntry } from "../types";
 
-/*
- * use type Patient, but omit id and entries,
- * because those are irrelevant for new patient object.
- */
-export type PatientFormValues = Omit<Patient, "id" | "entries">;
+export type EntryFormValues = Omit<OccupationalHealthcareEntry, "id">;
 
 interface Props {
-  onSubmit: (values: PatientFormValues) => void;
+  onSubmit: (values: EntryFormValues) => void;
   onCancel: () => void;
 }
 
-const genderOptions: GenderOption[] = [
-  { value: Gender.Male, label: "Male" },
-  { value: Gender.Female, label: "Female" },
-  { value: Gender.Other, label: "Other" },
-];
-
-export const AddPatientForm = ({ onSubmit, onCancel }: Props) => {
+export const AddEntryForm = ({ onSubmit, onCancel }: Props) => {
   return (
     <Formik
       initialValues={{
-        name: "",
-        ssn: "",
-        dateOfBirth: "",
-        occupation: "",
-        gender: Gender.Other,
+        type: "OccupationalHealthcare",
+        employerName: "",
+        description: "",
+        date: "",
+        specialist: "",
+        // TODO: sickleave
+        // TODO: diagnosisCodes
       }}
       onSubmit={onSubmit}
       validate={(values) => {
         const requiredError = "Field is required";
         const errors: { [field: string]: string } = {};
-        if (!values.name) {
-          errors.name = requiredError;
+        if (!values.employerName) {
+          errors.employerName = requiredError;
         }
-        if (!values.ssn) {
-          errors.ssn = requiredError;
+        if (!values.description) {
+          errors.description = requiredError;
         }
-        if (!values.dateOfBirth) {
-          errors.dateOfBirth = requiredError;
+        if (!values.date) {
+          errors.date = requiredError;
         }
-        if (!values.occupation) {
-          errors.occupation = requiredError;
+        if (!values.specialist) {
+          errors.specialist = requiredError;
         }
         return errors;
       }}
@@ -55,30 +47,29 @@ export const AddPatientForm = ({ onSubmit, onCancel }: Props) => {
         return (
           <Form className="form ui">
             <Field
-              label="Name"
-              placeholder="Name"
-              name="name"
+              label="Employer Name"
+              placeholder="acme ltd"
+              name="employerName"
               component={TextField}
             />
             <Field
-              label="Social Security Number"
-              placeholder="SSN"
-              name="ssn"
+              label="Description"
+              placeholder="it hurts when i do this"
+              name="description"
               component={TextField}
             />
             <Field
-              label="Date Of Birth"
+              label="Date"
               placeholder="YYYY-MM-DD"
-              name="dateOfBirth"
+              name="date"
               component={TextField}
             />
             <Field
-              label="Occupation"
-              placeholder="Occupation"
-              name="occupation"
+              label="Specialist"
+              placeholder="House, MD."
+              name="specialist"
               component={TextField}
             />
-            <SelectField label="Gender" name="gender" options={genderOptions} />
             <Grid>
               <Grid item>
                 <Button
@@ -111,4 +102,4 @@ export const AddPatientForm = ({ onSubmit, onCancel }: Props) => {
   );
 };
 
-export default AddPatientForm;
+export default AddEntryForm;

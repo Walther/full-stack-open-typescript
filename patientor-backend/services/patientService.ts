@@ -1,6 +1,14 @@
-import patients from "../data/patients";
-import { NewPatient, Patient, PatientPublicInfo } from "../types";
+import { patients as patientData } from "../data/patients";
+import {
+  Entry,
+  EntryWithoutId,
+  NewPatient,
+  Patient,
+  PatientPublicInfo,
+} from "../types";
 import { v1 as uuid } from "uuid";
+
+const patients: Patient[] = patientData;
 
 export const getPatients = (): Array<PatientPublicInfo> => {
   const patientsPublic: PatientPublicInfo[] = patients.map(
@@ -37,4 +45,21 @@ export const newPatient = (newPatient: NewPatient): PatientPublicInfo => {
     occupation,
   };
   return patientPublic;
+};
+
+export const newEntry = (
+  patientId: string,
+  newEntry: EntryWithoutId
+): Entry => {
+  const id: string = uuid();
+  const entry: Entry = {
+    ...newEntry,
+    id,
+  };
+  const patient = getPatient(patientId);
+  if (!patient) {
+    throw new Error("Unable to find patient to add the entry to");
+  }
+  patient.entries = [...patient.entries, entry];
+  return entry;
 };

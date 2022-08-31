@@ -2,9 +2,9 @@ import React from "react";
 import axios from "axios";
 import { Box, Typography, List, ListItemText } from "@material-ui/core";
 import { useParams } from "react-router-dom";
-import { setPatient, useStateValue } from "../state";
+import { setDiagnosesList, setPatient, useStateValue } from "../state";
 import { apiBaseUrl } from "../constants";
-import { Patient } from "../types";
+import { Diagnosis, Patient } from "../types";
 
 const PatientPage = () => {
   const { id } = useParams<{ id: string }>();
@@ -26,6 +26,18 @@ const PatientPage = () => {
       }
     };
     void fetchPatient();
+
+    const fetchDiagnoses = async () => {
+      try {
+        const { data: diagnosesFromApi } = await axios.get<Diagnosis[]>(
+          `${apiBaseUrl}/diagnoses`
+        );
+        dispatch(setDiagnosesList(diagnosesFromApi));
+      } catch (e) {
+        console.error(e);
+      }
+    };
+    void fetchDiagnoses();
   }, [dispatch]);
 
   const patient: Patient = state.patients[id];
@@ -33,6 +45,13 @@ const PatientPage = () => {
     return <p>could not fetch patient</p>;
   }
   const entries = patient.entries;
+  if (!entries) {
+    return <p>could not fetch patient entries</p>;
+  }
+  const diagnoses = state.diagnoses;
+  if (!diagnoses) {
+    return <p>could not fetch diagnoses</p>;
+  }
 
   return (
     <div className="App">
@@ -57,9 +76,12 @@ const PatientPage = () => {
           </h3>
           {entry.diagnosisCodes && (
             <List>
-              {entry.diagnosisCodes?.map((code) => (
-                <ListItemText key={code} primary={code} />
-              ))}
+              {entry.diagnosisCodes?.map((code: string) => {
+                const description: string = diagnoses[code]?.name;
+                return (
+                  <ListItemText key={code} primary={`${code} ${description}`} />
+                );
+              })}
             </List>
           )}
         </div>
